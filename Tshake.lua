@@ -6500,47 +6500,6 @@ end
 tdcli_function ({ ID = "GetMessage", chat_id_ = msg.chat_id_, message_id_ = tonumber(msg.reply_to_message_id_) }, by_reply, nil)
 end
 end
-if text == 'تغير المطور الاساسي' then
-if not DevTshake(msg) then
-send(msg.chat_id_,msg.id_,' هذا الامر خاص بالمطور الاساسي فقط')
-return false
-end
-database:set(bot_id..'Set:Text:Dev:Bot:id'..msg.chat_id_,true)
-send(msg.chat_id_, msg.id_,' ارسل الان معرف المطور الجديد')
-return false
-end
-if text and database:get(bot_id..'Set:Text:Dev:Bot:id'..msg.chat_id_) then
-if text == 'الغاء' then 
-database:del(bot_id..'Set:Text:Dev:Bot:id'..msg.chat_id_)
-send(msg.chat_id_, msg.id_,' تم الغاء تغيير Carbon')
-return false
-end
-local username = text:gsub('@','')
-tdcli_function ({ID = "SearchPublicChat",username_ = username}, function(extra, result, success)
-if result.id_ then
-if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_,"• عذرا عزيزي هذا معرف قناة يرجى ارسال المعرف مره اخره")   
-return false 
-end      
-local file_Info_Sudo = io.open("sudo.lua", 'w')
-file_Info_Sudo:write([[
-Sudo = "]]..result.id_..[["
-
-UserName = "@]]..username..[["
-
-token = "]]..token..[["
-]])
-file_Info_Sudo:close()
-else
-send(msg.chat_id_, msg.id_, '• لا يوجد حساب بهذا المعرف')
-end
-end, nil)
-database:del(bot_id..'Set:Text:Dev:Bot:id'..msg.chat_id_)
-send(msg.chat_id_, msg.id_,'تم تغيير المطور الاساسي \n الرجاء ارسل امر [تحديث]')
-dofile('sudo.lua') 
- dofile("Tshake.lua")  
-return false
-end
 if text == "تحديث" and DevTshake(msg) then
 dofile("Tshake.lua")  
 send(msg.chat_id_, msg.id_, "☑┇تم التحديث")
